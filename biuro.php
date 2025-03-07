@@ -1,3 +1,19 @@
+<?php
+$db = mysqli_connect('localhost', 'root', '', 'podroze');
+
+
+
+$q = "SELECT nazwaPliku, podpis FROM zdjecia ORDER BY podpis";
+$r = mysqli_query($db, $q);
+$obrazy = mysqli_fetch_all($r, MYSQLI_BOTH);
+
+
+$q = "SELECT cel, dataWyjazdu FROM wycieczki WHERE dostepna = 0";
+$r = mysqli_query($db, $q);
+$wycieczki = mysqli_fetch_all($r, MYSQLI_BOTH);
+
+mysqli_close($db);
+?>
 <!DOCTYPE html>
 <html lang="pl">
 <head>
@@ -30,33 +46,26 @@
         </aside>
         <main>
             <h2>W tym roku jedziemy do...</h2>
-                <img src="dubai.png" alt="Dubai" width="160" height="110"/>
-                <img src="istambul.png" alt="Istambuł" width="160" height="110"/>
-                <img src="krakow.png" alt="Kraków" width="160" height="110"/>
-               <br> <img src="londyn.png" alt="Londyn" width="160" height="110"/>
-                <img src="madryt.png" alt="Madryt" width="160" height="110"/>
-                <img src="paryz.png" alt="Paryż" width="160" height="110"/>
-               <br> <img src="warszawa.png" alt="Warszawa" width="160" height="110"/>
-                <img src="wenecja.png" alt="Wenecja" width="160" height="110"/>
-                <img src="zagrzeb.png" alt="Zagrzeb" width="160" height="110"/>
-                </main>
-                
-                <aside class="right">
-                    <h2>Kontakt</h2>
-                    <a href=>napisz do nas</a>
-                    <p>telefon: 444555666</p>
-                </aside>
-            </div>
-            <section class="data">
-                <h3>W poprzednich latach byliśmy...</h3>
-                <ol>
-                    <li> Dnia 2019-07-14 pojechaliśmy do Francja, Paryż </li>
-                    <li> Dnia 2019-07-14 pojechaliśmy do Hiszpania, Barcelona </li>
-                    <li> Dnia 2019-08-14 pojechaliśmy do Hiszpania, Barcelona </li>
-                </ol>
-            </section>
-            <footer>
-                <p>Strone wykonał: Karol Kort 4Ti</p>
-            </footer>
-        </body>
-        </html>
+            <?php foreach($obrazy as $obraz): ?>
+                <img src="<?= $obraz['nazwaPliku'] ?>" alt="<?= $obraz['podpis'] ?>" title="<?= $obraz['podpis'] ?>" />
+            <?php endforeach; ?>
+        </main>
+        <aside class="right">
+            <h2>Kontakt</h2>
+            <a href="mailto:biuro@wycieczki.pl">napisz do nas</a>
+            <p>telefon: 444555666</p>
+        </aside>
+    </div>
+    <section class="data">
+        <h3>W poprzednich latach byliśmy...</h3>
+        <ol>
+            <?php foreach($wycieczki as $wycieczka): ?>
+                <li>Dnia <?= $wycieczka['dataWyjazdu'] ?> pojechaliśmy do <?= $wycieczka['cel'] ?></li>
+            <?php endforeach ?>
+        </ol>
+    </section>
+    <footer>
+        <p>Stronę wykonał: 123456789112</p>
+    </footer>
+</body>
+</html>
