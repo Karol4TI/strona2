@@ -14,8 +14,11 @@ $wycieczki = mysqli_fetch_all($r, MYSQLI_BOTH);
 
 mysqli_close($db);
 ?>
+
+
 <!DOCTYPE html>
 <html lang="pl">
+   
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -65,7 +68,7 @@ mysqli_close($db);
         </ol>
     </section>
     <footer>
-        <p>Stronę wykonał: 123456789112</p>
+        <p>Stronę wykonał: Karol</p>
     </footer>
 </body>
 </html>
